@@ -6,7 +6,7 @@
 /*   By: tbaricau <tbaricau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 10:25:35 by tbaricau          #+#    #+#             */
-/*   Updated: 2025/09/06 13:12:38 by tbaricau         ###   ########.fr       */
+/*   Updated: 2025/09/07 14:48:25 by tbaricau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,15 @@ int	*read_views(char *str, int size)
 		else if (i % 2 == 1 && str[i] == ' ')
 			i++;
 		else
-		{
-			free(views);
-			return (NULL);
-		}
+			break ;
 	}
-	return (views);
+	if (str[i] == '\0' && j == size * 4)
+		return (views);
+	else
+	{
+		free(views);
+		return (NULL);
+	}
 }
 
 int	*init_tab(int size)
@@ -69,10 +72,7 @@ int	*init_tab(int size)
 
 void	run(int *tab, int *views, int size)
 {
-	int	found;
-
-	found = solve(tab, views, size, 0);
-	if (found)
+	if (solve(tab, views, size, 0))
 		display_tab(tab, size);
 	else
 		write(1, "Error\n", 6);
